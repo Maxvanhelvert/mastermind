@@ -12,3 +12,35 @@
 #   - player? that handles player input?
 #   - board that remembers the current board state and checks for correct inputs.
 #   - board also checks if the code is guessed. (check for win.)
+
+require 'colorize'
+require './board'
+require './computer_codemaker'
+
+def play_game
+  code = ComputerCodemaker.new
+  answer = code.set_code
+  Board.new(answer)
+  give_colors(answer)
+end
+
+def give_colors(pins)
+  pins.each do |pin|
+    if pin == 'red'
+      puts pin.colorize(:red)
+    elsif pin == 'blue'
+      puts pin.colorize(:blue)
+    elsif pin == 'yellow'
+      puts pin.colorize(:yellow)
+    elsif pin == 'cyan'
+      puts pin.colorize(:cyan)
+    elsif pin == 'green'
+      puts pin.colorize(:green)
+    elsif pin == 'purple'
+      puts pin.colorize(:magenta)
+    else
+      puts pin
+    end
+  end
+end
+play_game
