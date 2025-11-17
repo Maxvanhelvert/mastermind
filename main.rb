@@ -20,27 +20,35 @@ require './computer_codemaker'
 def play_game
   code = ComputerCodemaker.new
   answer = code.set_code
-  Board.new(answer)
-  give_colors(answer)
-end
+  current_board = Board.new(answer)
+  count = 0
 
-def give_colors(pins)
-  pins.each do |pin|
-    if pin == 'red'
-      puts pin.colorize(:red)
-    elsif pin == 'blue'
-      puts pin.colorize(:blue)
-    elsif pin == 'yellow'
-      puts pin.colorize(:yellow)
-    elsif pin == 'cyan'
-      puts pin.colorize(:cyan)
-    elsif pin == 'green'
-      puts pin.colorize(:green)
-    elsif pin == 'purple'
-      puts pin.colorize(:magenta)
-    else
-      puts pin
-    end
+  while count < 12
+    current_board.guess(get_guess)
+    # break if current_board.check_guess
+    count += 1
   end
 end
+
+def get_guess
+  guess = []
+  choices = %w[red blue yellow cyan green purple]
+
+  while guess.length < 6
+    puts "Choose color number #{guess.length + 1}:"
+    puts 'Choices (red, blue, yellow, cyan, green, purple)'
+    choice = gets.chomp.downcase
+    unless choices.include?(choice)
+      loop do
+        puts 'Choose a valid option:'
+        puts 'Choices (red, blue, yellow, cyan, green, purple)'
+        choice = gets.chomp.downcase
+        break if choices.include?(choice)
+      end
+    end
+    guess.append(choice)
+  end
+  guess
+end
+
 play_game
