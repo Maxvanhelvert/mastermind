@@ -9,14 +9,24 @@ class Board
 
   def guess(guess)
     @guesses.append(guess)
-    show(@guesses)
+    show
+    puts 'YOU GOT IT!'.colorize(:green) if win?(guess)
+    win?(guess)
   end
 
-  def show(guesses)
-    guesses.each do |guess|
+  def win?(guess)
+    guess == @answer
+  end
+
+  def show
+    puts ' '
+    puts 'Your guesses:'
+    @guesses.each_with_index do |guess, index|
+      print "#{index + 1} "
       give_colors(guess)
-      puts
+      puts ' '
     end
+    puts ' '
   end
 
   def give_colors(pins)

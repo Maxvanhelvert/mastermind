@@ -22,10 +22,11 @@ def play_game
   answer = code.set_code
   current_board = Board.new(answer)
   count = 0
+  puts answer
 
   while count < 12
-    current_board.guess(get_guess)
-    # break if current_board.check_guess
+    break if current_board.guess(get_guess)
+
     count += 1
   end
 end
@@ -46,6 +47,7 @@ def get_guess
         break if choices.include?(choice)
       end
     end
+    puts ' '
     guess.append(choice)
   end
   guess
