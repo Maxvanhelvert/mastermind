@@ -21,7 +21,14 @@ def play_game
   answer = code.set_code
   current_board = Board.new(answer)
   count = 0
-  puts answer
+  # puts answer
+
+  print 'Correct location: '
+  print '● '.colorize(:black)
+  puts
+  print 'Correct color: '
+  print '● '.colorize(:white)
+  puts
 
   while count < 12
     break if current_board.guess(get_guess)

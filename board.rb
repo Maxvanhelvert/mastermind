@@ -31,16 +31,22 @@ class Board
   end
 
   def placement?(guess)
-    temp_answer = @answer.clone
+    clone_answer = @answer.dup
+    clone_guess = guess.dup
 
     print 'Key: '
-    exact_match?(temp_answer, guess)
-    included?(temp_answer, guess)
+    exact_match?(clone_answer, clone_guess)
+    included?(clone_answer, clone_guess)
+    # deleting from the array not always working correctly
+    # sometimes gives 5 "correct" guesses
   end
 
   def exact_match?(answer, guess)
-    guess.each_with_index do |pin, i|
-      next unless answer[i] == pin
+    clone_answer = answer.dup
+    clone_guess = guess.dup
+
+    clone_guess.each_with_index do |pin, i|
+      next unless clone_answer[i] == pin
 
       print '● '.colorize(:black)
       answer.delete_at(i)
@@ -49,13 +55,17 @@ class Board
   end
 
   def included?(answer, guess)
-    guess.each_with_index do |_, i|
-      answer.each_with_index do |_, j|
-        next unless guess[i] == answer[j]
+    clone_answer = answer.dup
+    clone_guess = guess.dup
+
+    clone_guess.each do |i|
+      clone_answer.each do |j|
+        next unless i == j
 
         print '● '.colorize(:white)
-        answer.delete_at[j]
-        guess.delete_at[i]
+        answer.delete(j)
+        guess.delete(i)
+        break
       end
     end
   end
