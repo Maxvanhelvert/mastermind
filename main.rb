@@ -20,23 +20,31 @@ def play_game
   code = ComputerCodemaker.new
   answer = code.set_code
   current_board = Board.new(answer)
-  count = 0
-  # puts answer
 
+  game_instructions
+
+  game_rounds
+
+  puts 'The code was: '
+  current_board.give_colors(answer)
+  puts
+end
+
+def game_rounds
+  count = 0
+  while count < 12
+    break if current_board.guess(get_guess)
+
+    count += 1
+  end
+end
+
+def game_instructions
   print 'Correct location: '
   print '● '.colorize(:black)
   puts
   print 'Correct color: '
   print '● '.colorize(:white)
-  puts
-
-  while count < 1
-    break if current_board.guess(get_guess)
-
-    count += 1
-  end
-  puts 'The code was: '
-  current_board.give_colors(answer)
   puts
 end
 
