@@ -30,12 +30,14 @@ def play_game
   print '● '.colorize(:white)
   puts
 
-  while count < 12
+  while count < 1
     break if current_board.guess(get_guess)
 
     count += 1
   end
-  # print "the code was: ..."
+  puts 'The code was: '
+  current_board.give_colors(answer)
+  puts
 end
 
 def get_guess
