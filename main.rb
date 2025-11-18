@@ -7,11 +7,10 @@
 # if a correct guess, player wins
 # else, after 12 guesses computer wins.
 
-# Objects:
-#   - computer that selects secret code
-#   - player? that handles player input?
-#   - board that remembers the current board state and checks for correct inputs.
-#   - board also checks if the code is guessed. (check for win.)
+# To Do:
+# check for correct position
+# check for included
+# show dots for correct position & included
 
 require 'colorize'
 require './board'
@@ -35,7 +34,7 @@ def get_guess
   guess = []
   choices = %w[red blue yellow cyan green purple]
 
-  while guess.length < 6
+  while guess.length < 4
     puts "Choose color number #{guess.length + 1}:"
     puts 'Choices (red, blue, yellow, cyan, green, purple)'
     choice = gets.chomp.downcase

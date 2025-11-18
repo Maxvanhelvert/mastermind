@@ -7,7 +7,7 @@ class ComputerCodemaker
   end
 
   def set_code
-    while @code.length < 6
+    while @code.length < 4
       choice = CHOICES.sample
       @code.append(choice)
     end
