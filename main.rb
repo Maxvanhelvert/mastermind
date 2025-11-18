@@ -35,6 +35,7 @@ def play_game
 
     count += 1
   end
+  # print "the code was: ..."
 end
 
 def get_guess
