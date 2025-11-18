@@ -21,6 +21,9 @@ class Board
   def show
     puts ' '
     puts 'Your guesses:'
+    # loop that breaks at count >= @guesses.length
+    # print give_color(@guesses[count])
+    # print placement?(@keys[count])
     @guesses.each_with_index do |guess, index|
       print "#{index + 1} "
       give_colors(guess)
@@ -31,12 +34,15 @@ class Board
   end
 
   def placement?(guess)
+    # run this after guess is made to check each guess
+    # then store in @keys to be printed after the guess
     clone_answer = @answer.dup
     clone_guess = guess.dup
 
     print 'Key: '
     exact_match?(clone_answer, clone_guess)
     included?(clone_answer, clone_guess)
+    # current bug:
     # deleting from the array not always working correctly
     # sometimes gives 5 "correct" guesses
   end
