@@ -5,10 +5,12 @@ class Board
     @game_board = EMPTY_BOARD.map(&:dup)
     @answer = answer
     @guesses = []
+    @keys = []
   end
 
   def guess(guess)
     @guesses.append(guess)
+    placement?(guess)
     show
     puts 'YOU GOT IT!'.colorize(:green) if win?(guess)
     win?(guess)
@@ -21,14 +23,19 @@ class Board
   def show
     puts ' '
     puts 'Your guesses:'
+    count = 0
     # loop that breaks at count >= @guesses.length
     # print give_color(@guesses[count])
     # print placement?(@keys[count])
-    @guesses.each_with_index do |guess, index|
-      print "#{index + 1} "
-      give_colors(guess)
-      placement?(guess)
-      puts ' '
+    while count < @guesses.length
+      print "#{count + 1} "
+      give_colors(@guesses[count])
+      print 'Key: '
+      key_colors(@keys[count])
+      puts
+      break if count == @guesses.length
+
+      count += 1
     end
     puts ' '
   end
@@ -38,29 +45,28 @@ class Board
     # then store in @keys to be printed after the guess
     clone_answer = @answer.dup
     clone_guess = guess.dup
+    temp_key = []
 
-    print 'Key: '
-    exact_match?(clone_answer, clone_guess)
-    included?(clone_answer, clone_guess)
-    # current bug:
-    # deleting from the array not always working correctly
-    # sometimes gives 5 "correct" guesses
+    exact_match?(clone_answer, clone_guess, temp_key)
+    included?(clone_answer, clone_guess, temp_key)
+    @keys.append(temp_key)
   end
 
-  def exact_match?(answer, guess)
+  def exact_match?(answer, guess, key)
     clone_answer = answer.dup
     clone_guess = guess.dup
 
     clone_guess.each_with_index do |pin, i|
       next unless clone_answer[i] == pin
 
-      print '● '.colorize(:black)
+      key.append('exact')
       answer.delete_at(i)
       guess.delete_at(i)
     end
+    key
   end
 
-  def included?(answer, guess)
+  def included?(answer, guess, key)
     clone_answer = answer.dup
     clone_guess = guess.dup
 
@@ -68,32 +74,44 @@ class Board
       clone_answer.each do |j|
         next unless i == j
 
-        print '● '.colorize(:white)
+        key.append('almost')
         answer.delete(j)
         guess.delete(i)
         break
       end
     end
+    key
   end
 
   def give_colors(pins)
     pins.each do |pin|
       if pin == 'red'
-        print '●'.colorize(:red)
+        print '● '.colorize(:red)
       elsif pin == 'blue'
-        print '●'.colorize(:blue)
+        print '● '.colorize(:blue)
       elsif pin == 'yellow'
-        print '●'.colorize(:yellow)
+        print '● '.colorize(:yellow)
       elsif pin == 'cyan'
-        print '●'.colorize(:cyan)
+        print '● '.colorize(:cyan)
       elsif pin == 'green'
-        print '●'.colorize(:green)
+        print '● '.colorize(:green)
       elsif pin == 'purple'
-        print '●'.colorize(:magenta)
+        print '● '.colorize(:magenta)
       else
         print pin
       end
-      print ' '
+    end
+  end
+end
+
+def key_colors(pins)
+  pins.each do |pin|
+    if pin == 'exact'
+      print '● '.colorize(:black)
+    elsif pin == 'almost'
+      print '● '.colorize(:white)
+    else
+      print 'what are you doing?'
     end
   end
 end

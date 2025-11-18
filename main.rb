@@ -17,23 +17,23 @@ require './board'
 require './computer_codemaker'
 
 def play_game
-  code = ComputerCodemaker.new
-  answer = code.set_code
+  computer = ComputerCodemaker.new
+  answer = computer.set_code
   current_board = Board.new(answer)
 
   game_instructions
 
-  game_rounds
+  game_rounds(current_board)
 
   puts 'The code was: '
   current_board.give_colors(answer)
   puts
 end
 
-def game_rounds
+def game_rounds(board)
   count = 0
   while count < 12
-    break if current_board.guess(get_guess)
+    break if board.guess(get_guess)
 
     count += 1
   end
