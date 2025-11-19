@@ -7,11 +7,6 @@
 # if a correct guess, player wins
 # else, after 12 guesses computer wins.
 
-# To Do:
-# check for correct position
-# check for included
-# show dots for correct position & included
-
 require 'colorize'
 require './board'
 require './computer_codemaker'
