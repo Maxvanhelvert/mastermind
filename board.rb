@@ -53,30 +53,24 @@ class Board
   end
 
   def exact_match?(answer, guess, key)
-    clone_answer = answer.dup
-    clone_guess = guess.dup
-
-    clone_guess.each_with_index do |pin, i|
-      next unless clone_answer[i] == pin
+    guess.each_with_index do |pin, i|
+      next unless answer[i] == pin
 
       key.append('exact')
-      answer.delete_at(i)
-      guess.delete_at(i)
+      answer[i] = 'a'
+      guess[i] = 'g'
     end
     key
   end
 
   def included?(answer, guess, key)
-    clone_answer = answer.dup
-    clone_guess = guess.dup
-
-    clone_guess.each do |i|
-      clone_answer.each do |j|
-        next unless i == j
+    guess.each_with_index do |g_pin, i|
+      answer.each_with_index do |a_pin, j|
+        next unless g_pin == a_pin
 
         key.append('almost')
-        answer.delete(j)
-        guess.delete(i)
+        answer[j] = 'a'
+        guess[i] = 'g'
         break
       end
     end
