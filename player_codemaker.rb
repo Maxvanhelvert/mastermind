@@ -7,16 +7,16 @@ class PlayerCodemaker
   end
 
   def set_code
-    while guess.length < 4
-      puts "Choose color number #{guess.length + 1}:"
+    while @code.length < 4
+      puts "Choose color number #{@code.length + 1}:"
       puts 'Choices (red, blue, yellow, cyan, green, purple)'
       choice = gets.chomp.downcase
-      unless choices.include?(choice)
+      unless CHOICES.include?(choice)
         loop do
           puts 'Choose a valid option:'.colorize(:red)
           puts 'Choices (red, blue, yellow, cyan, green, purple)'
           choice = gets.chomp.downcase
-          break if choices.include?(choice)
+          break if CHOICES.include?(choice)
         end
       end
       puts ' '

@@ -16,6 +16,7 @@
 require 'colorize'
 require './board'
 require './computer_codemaker'
+require './player_codemaker'
 
 def guess_game
   computer = ComputerCodemaker.new
@@ -29,6 +30,11 @@ def guess_game
   puts 'The code was: '
   current_board.give_colors(answer)
   puts
+end
+
+def code_game
+  player = PlayerCodemaker.new.set_code
+  puts player
 end
 
 def game_rounds(board)
