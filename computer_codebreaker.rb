@@ -9,16 +9,15 @@ class ComputerCodebreaker
   end
 
   def create_all_codes
-    CHOICES.each do |i|
-      CHOICES.each do |j|
-        CHOICES.each do |m|
-          CHOICES.each do |n|
-            current_code = [i, j, m, n]
-            @possible_codes.push(current_code)
-          end
-        end
-      end
-    end
-    puts @possible_codes.length
+    @possible_codes = CHOICES.repeated_permutation(4).to_a
+  end
+
+  def get_guess
+    create_all_codes
+    # first guess to be CHOICES[0], CHOICES[0], CHOICES[1], CHOICES[1] (Could it be just random first guess?)
+    # trim possible codes/knuth codes for only ones that give the same result as first guess
+    # then, get random guess from possible guesses
+    # return guess to board
+    p @possible_codes.sample
   end
 end

@@ -18,35 +18,30 @@ require './board'
 require './computer_codemaker'
 require './player_codemaker'
 require './computer_codebreaker'
+require './player_codebreaker'
 
-def guess_game
-  computer = ComputerCodemaker.new
-  answer = computer.set_code
+def play_game(codemaker, codebreaker)
+  answer = codemaker.set_code
   current_board = Board.new(answer)
 
   game_instructions
   # create player codebreaker class that handles the generation of guess codes.
   # give this player to game_rounds to aks for player.get_guess
   # this can also be used for the computer guesser so game_rounds is usable for both.
-  game_rounds(current_board)
+  game_rounds(current_board, codebreaker)
 
   puts 'The code was: '
   current_board.give_colors(answer)
   puts
 end
 
-def code_game
-  player = PlayerCodemaker.new.set_code
-  puts player
-  ComputerCodebreaker.new.create_all_codes
-end
-
-def game_rounds(board)
-  # player/computer that will give guesses to board.guess()
+def game_rounds(board, codebreaker)
   count = 0
   while count < 12
-    break if board.guess(get_guess)
+    guess = board.guess(codebreaker.get_guess)
+    break if guess
 
+    # board to give result of guess to computer to check
     count += 1
   end
 end
@@ -60,45 +55,28 @@ def game_instructions
   puts
 end
 
-def get_guess
-  guess = []
-  choices = %w[red blue yellow cyan green purple]
-
-  while guess.length < 4
-    puts "Choose color number #{guess.length + 1}:"
-    puts 'Choices (red, blue, yellow, cyan, green, purple)'
-    choice = gets.chomp.downcase
-    unless choices.include?(choice)
-      loop do
-        puts 'Choose a valid option:'.colorize(:red)
-        puts 'Choices (red, blue, yellow, cyan, green, purple)'
-        choice = gets.chomp.downcase
-        break if choices.include?(choice)
-      end
-    end
-    puts ' '
-    guess.append(choice)
-  end
-  guess
-end
-
 def start
-  puts 'Choose your game option (codemaker, codebreaker): '
+  puts 'Choose your game option ([1] codemaker, [2] codebreaker): '
   choice = gets.chomp.downcase
+  codemaker = ''
+  codebreaker = ''
 
-  unless %w[codemaker codebreaker].include?(choice)
-    loop do
-      puts 'Choose a valid option (codemaker, codebreaker): '
+  loop do
+    if choice == '1'
+      codemaker = PlayerCodemaker.new
+      codebreaker = ComputerCodebreaker.new
+      break
+    elsif choice == '2'
+      codemaker = ComputerCodemaker.new
+      codebreaker = PlayerCodebreaker.new
+      break
+    else
+      puts 'Choose a valid option ([1] codemaker, [2] codebreaker): '
       choice = gets.chomp.downcase
-      break if %w[codemaker codebreaker].include?(choice)
     end
   end
 
-  if choice == 'codemaker'
-    code_game
-  else
-    guess_game
-  end
+  play_game(codemaker, codebreaker)
 end
 
 start
