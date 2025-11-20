@@ -7,7 +7,6 @@ class PlayerCodebreaker
   end
 
   def get_guess
-    p 'player codebreaker get_guess'
     @guess = NEW_GUESS.dup
     while @guess.length < 4
       puts "Choose color number #{@guess.length + 1}:"
