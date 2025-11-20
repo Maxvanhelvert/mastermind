@@ -17,6 +17,7 @@ require 'colorize'
 require './board'
 require './computer_codemaker'
 require './player_codemaker'
+require './computer_codebreaker'
 
 def guess_game
   computer = ComputerCodemaker.new
@@ -24,7 +25,9 @@ def guess_game
   current_board = Board.new(answer)
 
   game_instructions
-
+  # create player codebreaker class that handles the generation of guess codes.
+  # give this player to game_rounds to aks for player.get_guess
+  # this can also be used for the computer guesser so game_rounds is usable for both.
   game_rounds(current_board)
 
   puts 'The code was: '
@@ -35,9 +38,11 @@ end
 def code_game
   player = PlayerCodemaker.new.set_code
   puts player
+  ComputerCodebreaker.new.create_all_codes
 end
 
 def game_rounds(board)
+  # player/computer that will give guesses to board.guess()
   count = 0
   while count < 12
     break if board.guess(get_guess)
