@@ -1,9 +1,8 @@
 class PlayerCodemaker
-  NEW_CODE = []
   CHOICES = %w[red blue yellow cyan green purple]
 
   def initialize
-    @code = NEW_CODE
+    @code = []
   end
 
   def set_code

@@ -1,8 +1,6 @@
 class Board
-  EMPTY_BOARD = []
-
   def initialize(answer)
-    @game_board = EMPTY_BOARD.map(&:dup)
+    @game_board = []
     @answer = answer
     @guesses = []
     @keys = []
@@ -29,7 +27,6 @@ class Board
       print 'Key: '
       key_colors(@keys[count])
       puts
-      break if count == @guesses.length
 
       count += 1
     end

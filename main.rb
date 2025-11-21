@@ -24,7 +24,7 @@ def play_game(codemaker, codebreaker)
   answer = codemaker.set_code
   current_board = Board.new(answer)
 
-  game_instructions
+  game_instructions if codebreaker.instance_of?(PlayerCodebreaker)
   # create player codebreaker class that handles the generation of guess codes.
   # give this player to game_rounds to aks for player.get_guess
   # this can also be used for the computer guesser so game_rounds is usable for both.
@@ -41,9 +41,10 @@ def game_rounds(board, codebreaker)
     guess = codebreaker.get_guess
     board.guess(guess)
     placement_key = board.placement?(guess)
-    board.show
+    board.show if codebreaker.instance_of?(PlayerCodebreaker)
 
     if board.win?(guess)
+      board.show if codebreaker.instance_of?(ComputerCodebreaker)
       puts 'YOU GOT IT!'.colorize(:green)
       break
     end
@@ -88,4 +89,11 @@ def start
   play_game(codemaker, codebreaker)
 end
 
-start
+loop do
+  start
+
+  puts 'play again? (y/n)'
+  response = gets.chomp.downcase
+
+  break if response == 'n'
+end

@@ -1,11 +1,10 @@
 class ComputerCodebreaker
-  EMPTY_CODE_LIST = []
   CHOICES = %w[red blue yellow cyan green purple]
 
   def initialize
-    @knuth_codes = EMPTY_CODE_LIST
-    @possible_codes = EMPTY_CODE_LIST
-    @total_codes = EMPTY_CODE_LIST
+    @knuth_codes = []
+    @possible_codes = []
+    @total_codes = []
 
     create_all_codes
   end
@@ -30,8 +29,6 @@ class ComputerCodebreaker
     # run each knuth code against last guess
     # if key != answer, trim knuth code
     dup_knuth = @knuth_codes.dup
-    p guess
-    p key
     @knuth_codes.each do |try_code|
       next if placement?(guess, try_code) == key
 

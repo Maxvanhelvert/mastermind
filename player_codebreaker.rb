@@ -1,13 +1,12 @@
 class PlayerCodebreaker
   CHOICES = %w[red blue yellow cyan green purple]
-  NEW_GUESS = []
 
   def initialize
-    @guess = NEW_GUESS.dup
+    @guess = []
   end
 
   def get_guess
-    @guess = NEW_GUESS.dup
+    @guess = []
     while @guess.length < 4
       puts "Choose color number #{@guess.length + 1}:"
       puts 'Choices (red, blue, yellow, cyan, green, purple)'
