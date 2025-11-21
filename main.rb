@@ -38,10 +38,19 @@ end
 def game_rounds(board, codebreaker)
   count = 0
   while count < 12
-    guess = board.guess(codebreaker.get_guess)
-    break if guess
+    guess = codebreaker.get_guess
+    board.guess(guess)
+    placement_key = board.placement?(guess)
+    board.show
 
-    # board to give result of guess to computer to check
+    if board.win?(guess)
+      puts 'YOU GOT IT!'.colorize(:green)
+      break
+    end
+
+    temp_guess = guess.dup
+    spare_key = placement_key.dup
+    codebreaker.trim_codes(temp_guess, spare_key) if codebreaker.instance_of?(ComputerCodebreaker)
     count += 1
   end
 end

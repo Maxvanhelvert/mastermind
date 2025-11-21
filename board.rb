@@ -10,10 +10,6 @@ class Board
 
   def guess(guess)
     @guesses.append(guess)
-    placement?(guess)
-    show
-    puts 'YOU GOT IT!'.colorize(:green) if win?(guess)
-    win?(guess)
   end
 
   def win?(guess)
@@ -50,6 +46,7 @@ class Board
     exact_match?(clone_answer, clone_guess, temp_key)
     included?(clone_answer, clone_guess, temp_key)
     @keys.append(temp_key)
+    temp_key
   end
 
   def exact_match?(answer, guess, key)
